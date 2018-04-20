@@ -1,0 +1,16 @@
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\Logica.dll.config
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\Logica.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\Logica.pdb
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\Datos.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\Entidades.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\EntityFramework.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\System.Spatial.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\Datos.pdb
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\Entidades.pdb
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\EntityFramework.xml
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\bin\Debug\System.Spatial.xml
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\obj\Debug\Logica.csprojResolveAssemblyReference.cache
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\obj\Debug\Logica.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Logica\obj\Debug\Logica.pdb

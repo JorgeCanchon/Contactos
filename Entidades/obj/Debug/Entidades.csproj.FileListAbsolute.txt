@@ -1,0 +1,11 @@
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\bin\Debug\Entidades.dll.config
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\bin\Debug\Entidades.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\bin\Debug\Entidades.pdb
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\bin\Debug\EntityFramework.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\bin\Debug\System.Spatial.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\bin\Debug\EntityFramework.xml
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\bin\Debug\System.Spatial.xml
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\obj\Debug\Entidades.dll
+C:\Users\DESARROLLADOR1\documents\visual studio 2013\Projects\Contactos\Entidades\obj\Debug\Entidades.pdb
