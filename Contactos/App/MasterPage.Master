@@ -43,6 +43,8 @@
     <script src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script src="../dist/js/bootstrap.min.js"></script>
     <script src="../JS/funciones2.js"></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
 </body>
 </html>
 <script type="text/javascript">

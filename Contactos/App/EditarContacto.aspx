@@ -60,6 +60,7 @@
                                 <div class="form-group">
                                     <label for="image" class="cols-sm-2 control-label" >Imagen</label>
                                     <asp:Label Text="" runat="server" ID="imageTitle"/>
+                                    <span class="pull-right">Por defecto <asp:CheckBox ID="Check1" runat="server" AutoPostBack="False"/></span>
 						            <div class="cols-sm-10">
 							            <div class="input-group">
 								            <span class="input-group-addon">

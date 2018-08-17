@@ -73,6 +73,10 @@ namespace Contactos.App
             {
                 avatar = Server.HtmlEncode(file2.FileName);
             }
+            else if (Check1.Checked)
+            {
+                avatar = "default.jpg";
+            }
 
             if (string.IsNullOrEmpty(mensaje))
             {
@@ -119,6 +123,7 @@ namespace Contactos.App
             lng.Value = contacto.Geographic.Latitude.ToString().Replace(',', '.');
             DropDownListGenero.SelectedValue = contacto.Genero;
             DropDownListProfesion.SelectedValue = contacto.Codigo_Profesion.ToString();
+            Check1.Checked = false;
         }
         private bool saveImage(int Id)
         {

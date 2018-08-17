@@ -39,6 +39,21 @@ namespace Contactos.App
             string id = this.GridView_Buscar.DataKeys[e.RowIndex].Values[0].ToString();
             if (cr.DeleteContact(int.Parse(id)))
             {
+                ////this.GridView_Buscar.Rows[e.RowIndex].Visible = false;
+                ////validar el
+                //DataTable dt = (DataTable)ViewState["Consulta"];
+
+                //foreach (DataRow dr in dt.Rows)
+                //{
+                //    if (dr[0].ToString() == id)
+                //    {
+                //        dt.Rows.Remove(dr);
+                //        break;
+                //    }
+                //}
+                //// dt.Rows[e.RowIndex].Delete();
+                //ViewState["Consulta"] = dt;
+                Search();
                 LoadGrid();
                 UpdatePanel1.Update();
                 DeleteImage(id);
@@ -47,26 +62,37 @@ namespace Contactos.App
         private void LoadGrid()
         {
             GridView_Buscar.DataSource = (DataTable)ViewState["Consulta"];
-            GridView_Buscar.EmptyDataText = "No hay resultados disponibles.";
+            GridView_Buscar.EmptyDataText = string.Format("No hay resultados disponibles. ({0})",DateTime.Now.ToString());
             GridView_Buscar.DataBind();
         }
         private void DeleteImage(string idContacto)
         {
-            //
-            string pathRoot = System.AppDomain.CurrentDomain.BaseDirectory;
-
-            // Specify the path on the server.
-            string savePath = pathRoot + @"\Image\Contacto\";
-
-            string userPath = string.Format(@"{0}\User_{1}", savePath, Session["IdUsuario"]);
-
-            DirectoryInfo di = new DirectoryInfo(userPath);
-            foreach (var fi in di.GetFiles(string.Format("{0}*", idContacto)))
+            try
             {
-                File.Delete(userPath + @"\" + fi.Name);
+                //
+                string pathRoot = System.AppDomain.CurrentDomain.BaseDirectory;
+
+                // Specify the path on the server.
+                string savePath = pathRoot + @"\Image\Contacto\";
+
+                string userPath = string.Format(@"{0}\User_{1}", savePath, Session["IdUsuario"]);
+
+                DirectoryInfo di = new DirectoryInfo(userPath);
+                foreach (var fi in di.GetFiles(string.Format("{0}*", idContacto)))
+                {
+                    File.Delete(userPath + @"\" + fi.Name);
+                }
+                }
+            catch (Exception)
+            {
+
             }
         }
         protected void Search(object sender, EventArgs e)
+        {
+            Search();
+        }
+        private void Search()
         {
             string codigoProfesion = DropDownListProfesion.SelectedValue,
             genero = DropDownListGenero.SelectedValue,
@@ -106,7 +132,7 @@ namespace Contactos.App
                 ContactoRepositorio cr = new ContactoRepositorio();
                 DataTable data = cr.ObtenerContacto(sql);
                 ViewState["Consulta"] = data;
-                
+
                 if (data != null && data.Rows.Count > 0)
                 {
                     JArray array = new JArray();
@@ -114,7 +140,7 @@ namespace Contactos.App
                     {
                         JObject item = new JObject();
                         item.Add("ID", dr[0].ToString());
-                        item.Add("Geozona",dr[7].ToString());
+                        item.Add("Geozona", dr[7].ToString());
                         array.Add(item);
                     }
                     ResultJson = array.ToString();

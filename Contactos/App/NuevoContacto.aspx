@@ -42,6 +42,7 @@
 							                <div class="input-group">
 								                <span class="input-group-addon"><i class="fa fa-pencil fa" aria-hidden="true"></i></span>
 								                <input type="text" class="form-control" name="direccion" id="autocomplete" placeholder="Ingrese dirección" runat="server" autocomplete="off"/>
+                                                <span class="input-group-addon" onclick="geocodeAddress(1)"><i class="fa fa-search-plus"></i></span>
                                                 <input type="hidden" name="lng" id="lng" value="" runat="server"/>
                                                 <input type="hidden" name="lat" id="lat" value="" runat="server"/>
 							                </div>

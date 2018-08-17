@@ -25,9 +25,10 @@ namespace Contactos.App.ControlUsers
         {
             ContactoRepositorio cr = new ContactoRepositorio();
             ViewState["Consulta"] = cr.ObtenerContactos((int)Session["IdUsuario"]); 
-            GridView_Contacto.DataSource = (DataTable)ViewState["Consulta"]; 
+            GridView_Contacto.DataSource = (DataTable)ViewState["Consulta"];
             GridView_Contacto.EmptyDataText = "No hay resultados disponibles.";
             GridView_Contacto.DataBind();
+            labelUpdate.Text = string.Format("Última actualización - {0}",DateTime.Now.ToString());
         }
         protected void GridView_Contacto_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -42,18 +43,25 @@ namespace Contactos.App.ControlUsers
         }
         private void DeleteImage(string idContacto)
         {
-            //
-            string pathRoot = System.AppDomain.CurrentDomain.BaseDirectory;
-
-            // Specify the path on the server.
-            string savePath = pathRoot + @"\Image\Contacto\";
-
-            string userPath = string.Format(@"{0}\User_{1}", savePath, Session["IdUsuario"]);
-
-            DirectoryInfo di = new DirectoryInfo(userPath);
-            foreach (var fi in di.GetFiles(string.Format("{0}*",idContacto)))
+            try
             {
-                 File.Delete(userPath + @"\" + fi.Name );
+                //
+                string pathRoot = System.AppDomain.CurrentDomain.BaseDirectory;
+
+                // Specify the path on the server.
+                string savePath = pathRoot + @"\Image\Contacto\";
+
+                string userPath = string.Format(@"{0}\User_{1}", savePath, Session["IdUsuario"]);
+
+                DirectoryInfo di = new DirectoryInfo(userPath);
+                foreach (var fi in di.GetFiles(string.Format("{0}*",idContacto)))
+                {
+                     File.Delete(userPath + @"\" + fi.Name );
+                }
+            }
+            catch (Exception)
+            {
+
             }
         }
         protected void GridView_Contacto_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -117,6 +125,11 @@ namespace Contactos.App.ControlUsers
                 ViewState["dirState"] = value;
             }
 
+        }
+
+        protected void update_Click(object sender, EventArgs e)
+        {
+            LoadGrid();
         }
     }
 }

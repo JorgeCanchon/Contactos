@@ -10,6 +10,11 @@
                 <asp:AsyncPostBackTrigger ControlID="GridView_Contacto" EventName="PageIndexChanging" />
             </Triggers>
             <ContentTemplate>
+                <asp:Button Text="Actualizar" runat="server" ID="update" CssClass="btn btn-default" OnClick="update_Click"/>
+                <label class="pull-right"> <asp:Label Text="Última actualización - " runat="server" ID="labelUpdate"/></label>
+                <div class="col-lg-12">
+                    &nbsp;
+                </div>
                 <asp:GridView 
                     runat="server" ID="GridView_Contacto"  
                     AutoGenerateColumns="False"  

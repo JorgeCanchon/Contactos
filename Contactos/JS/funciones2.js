@@ -159,7 +159,7 @@ var marker_busqueda;
 var circle_busqueda;
 var dibujo;
 var circle;
-
+var markerCluster;
 //Verifica que solo una ventana infowindows este abierta
 //circle
 var prev_infowindow_c = false;
@@ -648,12 +648,12 @@ const validateDirection = _ => {
 }
 
 const LoadMapSearch = _ => {
-
+    try{
     let obj = $('#MainContent1_dataGeographic').val();
-
     if(obj != ""){
         if (markers.length > 0) {
-            deleteMarkers();
+            markerCluster.clearMarkers();
+            deleteMarkers(); 
         }
         obj = JSON.parse(obj);
         let infowindow = new google.maps.InfoWindow();
@@ -711,9 +711,18 @@ const LoadMapSearch = _ => {
         }//fin for
         //now fit the map to the newly inclusive bounds
         map_busqueda.fitBounds(bounds);
+
+        // add a marker clusterer to manage the markers.
+        markerCluster = new MarkerClusterer(map_busqueda, markers,
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
         setMapOnAll(map_busqueda);
-    }else{
-        deleteMarkers();
+        }else{
+            markerCluster.clearMarkers();
+            deleteMarkers();
+        }
+    }catch(err){
+        console.log(err);
     }
 };
 // Sets the map on all markers in the array.
@@ -731,4 +740,154 @@ const clearMarkers = _ => {
 const deleteMarkers = _ => {
     clearMarkers();
     markers = [];
+};
+
+
+const geocodeAddress = (type) => {
+    var geocoder = new google.maps.Geocoder();
+    let direccion = $(idAutocomplete).val().trim();
+    if(direccion != ""){
+        geocoder.geocode({'address': direccion}, function(results, status) {
+            if (status === 'OK') {
+
+                $(idLat).val(results[0].geometry.location.lat());
+                $(idLng).val(results[0].geometry.location.lng());
+                if(type === 0){
+                    $(idRadio).val(1000);
+
+                    if(circle){
+                        circle.setMap(null);
+                    }
+                    if(circle_busqueda){
+                        circle_busqueda.setMap(null);
+                    }
+                    circle_busqueda = new google.maps.Circle({
+                        //Color del borde
+                        strokeColor: '#FF0000',
+                        //Opacidad del borde
+                        strokeOpacity: 0.8,
+                        //Ancho borde
+                        strokeWeight:2,
+                        //Color de relleno
+                        fillColor: '#FF0000',
+                        //Habilita evento click
+                        clickable: true,
+                        //
+                        editable: true,
+                        //Habilita arrastre 
+                        draggable: true,
+                        center: results[0].geometry.location,
+                        radius: 1000,
+                        map: map
+                    });
+                    //
+                    google.maps.event.addListener(circle_busqueda,'click',function(){
+                        let p = confirm('¿Esta seguro de eliminar este circulo?');
+                        if(p){
+                            circle_busqueda.setMap(null);
+                            dibujo.setOptions({ 
+                                drawingControlOptions: 
+                                    {//Posición del cuadro de herramientas drawing
+                                        position: google.maps.ControlPosition.TOP_CENTER,
+                                        //Opciones de dibujo
+                                        drawingModes: ['circle']
+                                    }
+                            });
+                            $(idLat).val('');
+                            $(idLng).val('');
+                            $(idRadio).val('');
+                            $(idAutocomplete).val('');
+                        }
+                    });
+                    google.maps.event.addListener(circle_busqueda,'dragend',function(){
+                        ////Retorna un JSON con las direcciones cercanas a las coordenadas dadas.
+                        $(idLat).val(circle_busqueda.getCenter().lat());
+                        $(idLng).val(circle_busqueda.getCenter().lng());
+                        $(idRadio).val(circle_busqueda.getRadius());
+                        let geocoding ='https://maps.googleapis.com/maps/api/geocode/json?latlng=' + circle_busqueda.getCenter().lat() + ',' + circle_busqueda.getCenter().lng();
+            
+                        getDirections(geocoding).then(function(data){
+                            try{
+                                $(idAutocomplete).val(data.results[0].formatted_address);
+                            }catch(e){
+                                $(idLat).val('');
+                                $(idLng).val('');
+                                $(idAutocomplete).val('');
+                            }
+                        }).catch (function(error){});
+                    });
+                    google.maps.event.addListener(circle_busqueda, 'radius_changed', function(){
+                        let radius = parseInt(circle_busqueda.getRadius());
+                        $(idRadio).val(circle_busqueda.getRadius());
+                        setRadiusCircle(radius,circle_busqueda);
+                    });
+                }else if(type === 1){
+                    if(marker){
+                        marker.setMap(null);
+                    }
+                    if(marker_busqueda){
+                        marker_busqueda.setMap(null);
+                    }
+                    marker_busqueda = new google.maps.Marker({
+                        animation: google.maps.Animation.DROP,
+                        //Habilita arrastre 
+                        draggable: true,
+                        //Habilita evento click
+                        clickable: false,
+                        //
+                        position: results[0].geometry.location,
+                        map:map
+                    });
+                    marker_busqueda.addListener('click',function(event) {
+                        let p = confirm('¿Esta seguro de eliminar esta marca?');
+                        if(p){
+                            marker_busqueda.setMap(null);
+                            option.push('marker');
+                            $(idLat).val('');
+                            $(idLng).val('');
+                            $(idAutocomplete).val('');
+
+                            dibujo.setOptions({ 
+                                drawingControlOptions: 
+                                    {//Posición del cuadro de herramientas drawing
+                                        position: google.maps.ControlPosition.TOP_CENTER,
+                                        //Opciones de dibujo
+                                        drawingModes: ['marker']
+                                    }
+                            });
+                        }
+                    });
+                    //
+                    marker_busqueda.addListener('dragend',function(event) {
+                        $(idLat).val(event.latLng.lat());
+                        $(idLng).val(event.latLng.lng());
+
+        
+                        let geocoding ='https://maps.googleapis.com/maps/api/geocode/json?latlng=' + event.latLng.lat() + ',' + event.latLng.lng();
+            
+                        getDirections(geocoding).then(function(data){
+                            try{
+                                $(idAutocomplete).val(data.results[0].formatted_address);
+                            }catch(e){
+                                $(idLat).val('');
+                                $(idLng).val('');
+                                $(idAutocomplete).val('');
+                            }
+                        }).catch (function(error){});
+                    });
+                }
+                dibujo.setOptions({ drawingControlOptions: {
+                    //Posición del cuadro de herramientas drawing
+                    position: google.maps.ControlPosition.TOP_CENTER,
+                    //Opciones de dibujo
+                    drawingModes: []
+                }});
+
+                map.setCenter(results[0].geometry.location);
+                map.setZoom(13);
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
 };

@@ -18,7 +18,8 @@ namespace Datos.Repositorio
             string cadenaConexion = ConfigurationManager.ConnectionStrings["Entities"].ConnectionString;
             Conexion = new SqlConnection(cadenaConexion);
         }
-        private SqlConnection Conexion
+        private SqlConnection 
+            Conexion
         {
             get { return conexion; }
             set { conexion = value; }
